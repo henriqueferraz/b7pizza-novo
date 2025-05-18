@@ -4,6 +4,7 @@ import { Product } from "@/generated/prisma";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { decimalToMoney } from "@/lib/utils";
+import { useCart } from "@/stores/cart";
 
 type Props = {
     data: Product;
@@ -11,8 +12,14 @@ type Props = {
 
 export const PizzaItem = ({ data }: Props) => {
 
+    const cart = useCart();
+
     const handleAddToCart = () => {
-        console.log("Adicionar ao carrinho", data);
+        cart.addItem({
+            productId: data.id,
+            quantity: 1
+        });
+        cart.setOpen(true);
     }
 
 
